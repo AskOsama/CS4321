@@ -43,10 +43,16 @@ class LexicalAnalyzer:
             dict: Dictionary mapping token type names to their regex patterns
         """
         return kwargs
-
+    
     def update_patterns(self, **kwargs):
         """
         Update token patterns and regenerate token specifications.
+        
+        This allows you to modify the lexical analyzer's recognition patterns during its lifecycle,
+        which can be useful for language extensions or context-specific scanning.
+        
+        Args:
+            **kwargs: New token patterns to add or update
         """
         if kwargs:
             # Update with new patterns
@@ -91,7 +97,7 @@ class LexicalAnalyzer:
         # Regenerate token specifications and combined pattern
         self.token_specs = pattern_items
         self.combined_pattern = self.build_combined_pattern(self.token_specs)
-
+    
     def build_combined_pattern(self, token_specs):
         """
         Build a combined regex pattern with named capture groups.
@@ -227,42 +233,6 @@ class LexicalAnalyzer:
         print("\n")
         return df_tokens
     
-    # def interactive_test(self):
-    #     """
-    #     Run an interactive test session for the lexical analyzer.
-        
-    #     This method provides a command-line interface for testing expressions.
-    #     Users can enter expressions one at a time and see the token analysis results.
-    #     After each analysis, the user is asked if they want to continue or quit.
-        
-    #     This is particularly useful during compiler development to test how the lexical
-    #     analyzer handles different input patterns and edge cases.
-    #     """
-    #     print("\n" + "="*50)
-    #     print("LexicalAnalyzer Interactive Testing Mode")
-    #     print("="*50)
-    #     print("Enter expressions to analyze. The analyzer will tokenize each input.")
-    #     print("Current token patterns:", ", ".join(name for name, _ in self.token_specs))
-    #     print("="*50)
-        
-    #     while True:
-    #         # Get user input for the expression
-    #         print("\n")
-    #         expression = input("Enter an expression to analyze (or 'q' to quit): ")
-            
-    #         # Check if the user wants to quit
-    #         if expression.lower() == 'q':
-    #             print("\nExiting interactive test mode.")
-    #             break
-            
-    #         # Analyze the expression
-    #         self.analyze_expression(expression)
-            
-    #         # Ask if the user wants to continue
-    #         continue_choice = input("\nPress Enter to analyze another expression or 'q' to quit: ")
-    #         if continue_choice.lower() == 'q':
-    #             print("\nExiting interactive test mode.")
-    #             break
     def interactive_test(self):
         """
         Run an interactive test session for the lexical analyzer.
