@@ -43,7 +43,7 @@ class LexicalAnalyzer:
             dict: Dictionary mapping token type names to their regex patterns
         """
         return kwargs
-    
+
     def update_patterns(self, **kwargs):
         """
         Update token patterns and regenerate token specifications.
@@ -84,14 +84,14 @@ class LexicalAnalyzer:
                 pattern_items.remove(whitespace_item)
                 pattern_items.append(whitespace_item)
         
-        # NEW CODE: Sort patterns by their length/specificity
+        # Sort patterns by their length/specificity
         # This will ensure longer patterns are tried before shorter ones
         pattern_items.sort(key=lambda x: len(x[1]), reverse=True)
         
         # Regenerate token specifications and combined pattern
         self.token_specs = pattern_items
-        self.combined_pattern = self.build_combined_pattern(self.token_specs)    
-    
+        self.combined_pattern = self.build_combined_pattern(self.token_specs)
+
     def build_combined_pattern(self, token_specs):
         """
         Build a combined regex pattern with named capture groups.
