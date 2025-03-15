@@ -47,12 +47,6 @@ class LexicalAnalyzer:
     def update_patterns(self, **kwargs):
         """
         Update token patterns and regenerate token specifications.
-        
-        This allows you to modify the lexical analyzer's recognition patterns during its lifecycle,
-        which can be useful for language extensions or context-specific scanning.
-        
-        Args:
-            **kwargs: New token patterns to add or update
         """
         if kwargs:
             # Update with new patterns
@@ -90,9 +84,13 @@ class LexicalAnalyzer:
                 pattern_items.remove(whitespace_item)
                 pattern_items.append(whitespace_item)
         
+        # NEW CODE: Sort patterns by their length/specificity
+        # This will ensure longer patterns are tried before shorter ones
+        pattern_items.sort(key=lambda x: len(x[1]), reverse=True)
+        
         # Regenerate token specifications and combined pattern
         self.token_specs = pattern_items
-        self.combined_pattern = self.build_combined_pattern(self.token_specs)
+        self.combined_pattern = self.build_combined_pattern(self.token_specs)    
     
     def build_combined_pattern(self, token_specs):
         """
